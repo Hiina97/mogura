@@ -7,13 +7,37 @@
     <style>
         *{
             text-align: center;
+            
+        }
+
+        body{
+            background-image: url("1043218.jpg");
+            background-size: cover;
+        }
+
+        h1{
+            margin-top: 50px;
+        }
+
+        #btn{
+            width: 100px;
+            height: 50px;
+            background-color: green;
+            border-radius: 10px;
+            color: white;
+            
+        }
+
+        #btn:hover{
+            background-color: white;
+            color: green;
         }
 
         .hole{
             border-radius: 50%;
-            background-color: brown;
+            background-color: black;
             width: 175px;
-            height: 175px;
+            height: 100px;
         }
 
         .beside{
@@ -21,44 +45,86 @@
             flex-direction: row;
             justify-content: space-around;
         }
+        #countdown{
+            display: none;
+            font-size: 50px;
+        }
 
         .main{
-            margin: 20px auto;
+            margin: 300px auto 0;
             width: 600px;
-            height: 600px;
+            height: 400px;
             display: flex;
             flex-direction: column;
             justify-content: space-around;
+        }
+
+        img {
+            display: none;
+            width: 175px;
         }
     </style>
 </head>
 <body>
     <h1>モグラたたきゲーム！</h1>
-    <button>スタート</button>
+    <button id="btn">スタート</button>
+    <div id="countdown">3</div>
     <div class="main">
         <div class="beside">
-            <div class="hole" id="1"></div>
-            <div class="hole" id="2"></div>
-            <div class="hole" id="3"></div>            
+            <div class="hole" id="1">
+                <img src="22520270.png" alt="mogura">
+            </div>
+            <div class="hole" id="2">
+                <img src="22520270.png" alt="mogura">
+            </div>
+            <div class="hole" id="3">
+                <img src="22520270.png" alt="mogura">
+            </div>            
         </div>
         <div class="beside">
-            <div class="hole" id="4"></div>
-            <div class="hole" id="5"></div>
-            <div class="hole" id="6"></div>    
-        </div>
-        <div class="beside">
-            <div class="hole" id="7"></div>
-            <div class="hole" id="8"></div>
-            <div class="hole" id="9"></div>    
+            <div class="hole" id="4">
+                <img src="22520270.png" alt="mogura">
+            </div>
+            <div class="hole" id="5">
+                <img src="22520270.png" alt="mogura">
+            </div>
+            <div class="hole" id="6">
+                <img src="22520270.png" alt="mogura">
+            </div>    
         </div>
     </div>
 
-    <script>
-        random = () =>{
-            const random = Math.floor(Math.random()*9);
+   <script>
+        const btn = document.getElementById("btn");
+        const countdown = document.getElementById("countdown");
+
+        let count = 3;
+
+        btn.addEventListener("click",()=>{
+            countdown.style.display = "block";
+            btn.style.display = "none";
+            setInterval(() => {
+                countDown()
+            },1000);
+        })
+
+        countDown = () =>{
+            if(count>0){
+                count--;
+                countdown.textContent = count;
+            }else{
+                countdown.textContent = 0;
+            
+
+            }
         }
+
         
         
-    </script>
+        
+
+
+
+   </script>
 </body>
 </html>
