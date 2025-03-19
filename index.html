@@ -52,10 +52,17 @@
             display: none;
             font-size: 50px;
         }
+        
+        #point{
+            display: flex;
+            justify-content: center;
+            display: none; 
+            font-size: 30px;
+        }
 
         .main{
             position: fixed;
-            bottom: 100px;
+            bottom: 50px;
             width: 600px;
             height: 400px;
             display: flex;
@@ -92,6 +99,7 @@
     <button id="btn">カウントダウン開始</button>
     <div id="countdown">3</div>
     <div id="timer"><p id="nokori">残り時間:</p><p id="time">10</p></div>
+    <div id="point"><p>ポイント</p><p id="Point">0</p></div>
     <div class="Main">
 
         <div class="main">
@@ -126,9 +134,12 @@
         const timer = document.getElementById("time");
         const nokori = document.getElementById("nokori");  
         const goal = document.getElementById("goal");
+        const point = document.getElementById("point");
+        const Point = document.getElementById("Point");
 
         let count = 3;
         let time = 10;
+        let click = 0;
 
         btn.addEventListener("click",()=>{
             countdown.style.display = "block";
@@ -139,12 +150,19 @@
         })
 
         countDown = () =>{
-            if(count>1){
+            if(count === 0){
+                countdown.textContent = "スタート！";
+                point.style.display = "block";
+                setInterval(() => {
+                    hole();
+                }, 500);
+                
+                
+            }else{
                 count--;
                 countdown.textContent = count;
-            }else{
-                countdown.textContent = "スタート！";
-                hole();
+                
+
                 
                 
 
@@ -158,28 +176,31 @@
             if(time>0){
                     time--;
                     timer.textContent =time;
-                    let num = 0;
-                    num = Math.floor(Math.random()*6)+1;
+                    // let num = 0;
+                    let num = Math.floor(Math.random()*6)+1;
                     const holeNum = document.getElementById(num).querySelector("img");
-                    holeNum.style.display = "block";
+
+                    // クリックイベントを重複しないようにする
+                    holeNum.replaceWith(holeNum.cloneNode(true));
+                    const newHoleNum = document.getElementById(num).querySelector("img");
+
+                    newHoleNum.style.display = "block";
+                    
+                    newHoleNum.onclick = () => {
+                    click += 1;
+                    newHoleNum.style.display = "none";
+                    Point.textContent = click;
+                    };
+
                     setTimeout(()=>{
                         holeNum.style.display = "none";
-                    },1500);
-                }else
-                holeNum.style.display = "none";
-                
-
+                    },500);
     
-                    
+            }else{
+                holeNum.style.display = "none";
+            }}
 
-            
-            
-
-        
-        
-        }
-        
-        
+       
 
 
 
