@@ -12,6 +12,9 @@
 
         body{
             background-image: url("1043218.jpg");
+            background-position:center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;            
             background-size: cover;
         }
 
@@ -20,7 +23,7 @@
         }
 
         #btn{
-            width: 100px;
+            width: 200px;
             height: 50px;
             background-color: green;
             border-radius: 10px;
@@ -51,7 +54,8 @@
         }
 
         .main{
-            margin: 300px auto 0;
+            position: fixed;
+            bottom: 100px;
             width: 600px;
             height: 400px;
             display: flex;
@@ -62,43 +66,69 @@
         img {
             display: none;
             width: 175px;
+            
         }
+
+        #timer{
+            font-size: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        #goal{
+            display: none;
+            margin:0 0;
+        }
+
+        .Main{
+            display: flex;
+            justify-content: center;
+        }
+        
     </style>
 </head>
 <body>
     <h1>モグラたたきゲーム！</h1>
-    <button id="btn">スタート</button>
+    <button id="btn">カウントダウン開始</button>
     <div id="countdown">3</div>
-    <div class="main">
-        <div class="beside">
-            <div class="hole" id="1">
-                <img src="22520270.png" alt="mogura">
+    <div id="timer"><p id="nokori">残り時間:</p><p id="time">10</p></div>
+    <div class="Main">
+
+        <div class="main">
+            <div class="beside">
+                <div class="hole" id="1">
+                    <img src="22520270.png" alt="mogura">
+                </div>
+                <div class="hole" id="2">
+                    <img src="22520270.png" alt="mogura">
+                </div>
+                <div class="hole" id="3">
+                    <img src="22520270.png" alt="mogura">
+                </div>            
             </div>
-            <div class="hole" id="2">
-                <img src="22520270.png" alt="mogura">
+            <div class="beside">
+                <div class="hole" id="4">
+                    <img src="22520270.png" alt="mogura">
+                </div>
+                <div class="hole" id="5">
+                    <img src="22520270.png" alt="mogura">
+                </div>
+                <div class="hole" id="6">
+                    <img src="22520270.png" alt="mogura">
+                </div>    
             </div>
-            <div class="hole" id="3">
-                <img src="22520270.png" alt="mogura">
-            </div>            
-        </div>
-        <div class="beside">
-            <div class="hole" id="4">
-                <img src="22520270.png" alt="mogura">
-            </div>
-            <div class="hole" id="5">
-                <img src="22520270.png" alt="mogura">
-            </div>
-            <div class="hole" id="6">
-                <img src="22520270.png" alt="mogura">
-            </div>    
-        </div>
+    </div>
     </div>
 
    <script>
         const btn = document.getElementById("btn");
         const countdown = document.getElementById("countdown");
+        const timer = document.getElementById("time");
+        const nokori = document.getElementById("nokori");  
+        const goal = document.getElementById("goal");
 
         let count = 3;
+        let time = 10;
 
         btn.addEventListener("click",()=>{
             countdown.style.display = "block";
@@ -109,17 +139,45 @@
         })
 
         countDown = () =>{
-            if(count>0){
+            if(count>1){
                 count--;
                 countdown.textContent = count;
             }else{
-                countdown.textContent = 0;
+                countdown.textContent = "スタート！";
+                hole();
+                
+                
+
             
 
             }
         }
 
         
+        hole= () =>{
+            if(time>0){
+                    time--;
+                    timer.textContent =time;
+                    let num = 0;
+                    num = Math.floor(Math.random()*6)+1;
+                    const holeNum = document.getElementById(num).querySelector("img");
+                    holeNum.style.display = "block";
+                    setTimeout(()=>{
+                        holeNum.style.display = "none";
+                    },1500);
+                }else
+                holeNum.style.display = "none";
+                
+
+    
+                    
+
+            
+            
+
+        
+        
+        }
         
         
 
