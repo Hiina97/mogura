@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport", content="width=device-width", initial-scale=1.0, user-scalable="no">
     <title>モグラたたき</title>
     <style>
         *{
@@ -14,6 +14,7 @@
             background-image: url("1043218.jpg");
             background-position:center center;
             background-repeat: no-repeat;
+            min-height: 100vh; /* スマホでも画面全体をカバー */
             background-attachment: fixed;            
             background-size: cover;
         }
@@ -49,20 +50,18 @@
             justify-content: space-around;
         }
         #countdown{
-            display: none;
+            visibility: hidden;
             font-size: 50px;
         }
         
         #point{
             display: flex;
             justify-content: center;
-            display: none; 
+            visibility: hidden; 
             font-size: 30px;
         }
 
         .main{
-            position: fixed;
-            bottom: 50px;
             width: 600px;
             height: 400px;
             display: flex;
@@ -83,13 +82,53 @@
         }
 
         #goal{
-            display: none;
+            visibility: hidden;
             margin:0 0;
         }
 
         .Main{
             display: flex;
             justify-content: center;
+        }
+
+        @media (max-width: 600px) {
+        
+        h1 {
+            font-size: 20px; /* タイトルのフォントサイズを縮小 */
+        }
+    
+        #btn {
+            width: 150px;
+            height: 40px;
+            font-size: 14px;
+        }
+    
+        #countdown {
+            font-size: 40px; /* カウントダウンのサイズを小さく */
+        }
+    
+        #timer, #point {
+            font-size: 20px; /* タイマーとポイントのサイズを調整 */
+        }
+    
+        .hole {
+            width: 100px; /* 穴のサイズを小さく */
+            height: 60px;
+        }
+    
+        img {
+            width: 100px; /* モグラのサイズを縮小 */
+        }
+    
+        .main {
+            width: 90vw; /* 画面幅の90%を使用 */
+            height: auto; /* 高さを自動調整 */
+        }
+    
+        .beside {
+            flex-wrap: wrap; /* 画面が狭い場合、折り返す */
+            justify-content: center;
+        }
         }
         
     </style>
@@ -142,8 +181,8 @@
         let click = 0;
 
         btn.addEventListener("click",()=>{
-            countdown.style.display = "block";
-            btn.style.display = "none";
+            countdown.style.visibility = "visible";
+            btn.style.visibility = "hidden";
             setInterval(() => {
                 countDown()
             },1000);
@@ -152,53 +191,73 @@
         countDown = () =>{
             if(count === 0){
                 countdown.textContent = "スタート！";
-                point.style.display = "block";
-                setInterval(() => {
-                    hole();
-                }, 500);
-                
-                
+                point.style.visibility = "visible";
+                setTimeout(()=>{
+                    Timer();
+                },800);
             }else{
                 count--;
-                countdown.textContent = count;
-                
-
-                
-                
-
-            
-
+                countdown.textContent = count;                   
             }
         }
 
-        
-        hole= () =>{
-            if(time>0){
+        hole = () =>{
+            let random = Math.floor(Math.random()*6)+1;
+            const mogura = document.getElementById(random).querySelector("img");
+            setTimeout(() => {
+                mogura.style.display = "block";
+                mogura.addEventListener("click", () => {
+                mogura.style.display = "none";
+                click += 1;
+                Point.textContent = click;
+                }, { once: true }); // クリックイベントを1回だけ適用
+                }, 800);
+            setTimeout(() => {
+                mogura.style.display = "none";
+            }, 1500);
+            }
+
+            Timer = () =>{
+                if(time === 0){
+                    nokori.textContent = "終了！";
+                    timer.style.display = "none";
+                    mogura.style.display = "none";
+                }else
+                    hole();
                     time--;
-                    timer.textContent =time;
-                    // let num = 0;
-                    let num = Math.floor(Math.random()*6)+1;
-                    const holeNum = document.getElementById(num).querySelector("img");
+                    timer.textContent = time;
+            }
 
-                    // クリックイベントを重複しないようにする
-                    holeNum.replaceWith(holeNum.cloneNode(true));
-                    const newHoleNum = document.getElementById(num).querySelector("img");
 
-                    newHoleNum.style.display = "block";
+
+        
+        // hole= () =>{
+        //     if(time === 0){
+        //         holeNum.style.display = "none";
+        //     }else{
+        //         time--;
+        //             timer.textContent = time;
+        //             // let num = 0;
+        //             let num = Math.floor(Math.random()*6)+1;
+        //             const holeNum = document.getElementById(num).querySelector("img");
+
+        //             // クリックイベントを重複しないようにする
+        //             holeNum.replaceWith(holeNum.cloneNode(true));
+        //             const newHoleNum = document.getElementById(num).querySelector("img");
+
+        //             newHoleNum.style.display = "block";
                     
-                    newHoleNum.onclick = () => {
-                    click += 1;
-                    newHoleNum.style.display = "none";
-                    Point.textContent = click;
-                    };
+        //             newHoleNum.onclick = () => {
+        //             click += 1;
+        //             newHoleNum.style.display = "none";
+        //             Point.textContent = click;
+        //             };
 
-                    setTimeout(()=>{
-                        holeNum.style.display = "none";
-                    },500);
-    
-            }else{
-                holeNum.style.display = "none";
-            }}
+        //             setTimeout(()=>{
+        //                 holeNum.style.display = "none";
+        //             },500);
+                
+        //     }}
 
        
 
